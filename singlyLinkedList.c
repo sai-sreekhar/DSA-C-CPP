@@ -64,7 +64,7 @@ void insertAtTail(int data)
         link->next = NULL;
         return;
     }
-    
+
     node *curNode = head;
     while (curNode->next != NULL)
     {
@@ -82,7 +82,7 @@ void deleteAtTail()
         printf("The SinglyLinkedList is Empty\n");
         return;
     }
-    
+
     node *curNode = head;
 
     if (curNode->next == NULL)
@@ -91,7 +91,7 @@ void deleteAtTail()
         head = NULL;
         return;
     }
-    
+
     while ((curNode->next)->next != NULL)
     {
         curNode = curNode->next;
@@ -103,7 +103,45 @@ void deleteAtTail()
     return;
 }
 
-void displayLengthOfSinglyLinkedList()
+void insertAtPos(int data, int pos)
+{
+    node *link = (node *)malloc(sizeof(node));
+
+    if (link == NULL)
+    {
+        printf("Memory Allocation Failed\n");
+        return;
+    }
+
+    if (pos == 1)
+    {
+        insertAtHead(data);
+    }
+    else if (pos == getLengthOfSinglyLinkedList() + 1)
+    {
+        insertAtTail(data);
+    }
+    else
+    {
+        int curPos = 1;
+        node* curNode = head;
+        node* pvsNode;
+        while (curPos != pos)
+        {
+            curPos++;
+            pvsNode = curNode;
+            curNode = curNode->next;
+        }
+
+        pvsNode->next = link;
+        link->next = curNode;
+        link->data = data;
+    }
+
+    return;
+}
+
+int getLengthOfSinglyLinkedList()
 {
     int length = 0;
     node *curNode = head;
@@ -114,8 +152,8 @@ void displayLengthOfSinglyLinkedList()
         length++;
     }
 
-    printf("The length Of SinglyLinkedList is %d\n",length);
-    return;
+    printf("The length Of SinglyLinkedList is %d\n", length);
+    return length;
 }
 
 void displaySinglyLinkedList()
@@ -136,10 +174,11 @@ void displaySinglyLinkedList()
 int main()
 {
     insertAtTail(5);
+    insertAtHead(1);
+    insertAtHead(2);
+    insertAtHead(3);
+    insertAtPos(10,4);
 
-    deleteAtHead();
-    deleteAtTail();
-    displayLengthOfSinglyLinkedList();
     displaySinglyLinkedList();
 
     return 0;
