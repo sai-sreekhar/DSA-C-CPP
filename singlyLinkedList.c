@@ -19,7 +19,7 @@ void insertAtHead(int data)
 
     if (link == NULL)
     {
-        printf("Memory Allocation Failed");
+        printf("Memory Allocation Failed\n");
         return;
     }
 
@@ -32,9 +32,16 @@ void insertAtHead(int data)
 
 void deleteAtHead()
 {
+    if (head == NULL)
+    {
+        printf("The SinglyLinkedList is Empty\n");
+        return;
+    }
+
     node *newHead = head->next;
     free(head);
     head = newHead;
+
     return;
 }
 
@@ -44,7 +51,7 @@ void insertAtTail(int data)
 
     if (link == NULL)
     {
-        printf("Memory Allocation Failed");
+        printf("Memory Allocation Failed\n");
         return;
     }
 
@@ -64,6 +71,34 @@ void insertAtTail(int data)
         curNode = curNode->next;
     }
     curNode->next = link;
+
+    return;
+}
+
+void deleteAtTail()
+{
+    if (head == NULL)
+    {
+        printf("The SinglyLinkedList is Empty\n");
+        return;
+    }
+    
+    node *curNode = head;
+
+    if (curNode->next == NULL)
+    {
+        free(curNode);
+        head = NULL;
+        return;
+    }
+    
+    while ((curNode->next)->next != NULL)
+    {
+        curNode = curNode->next;
+    }
+
+    free((curNode->next)->next);
+    curNode->next = NULL;
 
     return;
 }
@@ -100,10 +135,10 @@ void displaySinglyLinkedList()
 
 int main()
 {
-    // insertAtHead(100);
-    insertAtHead(1000);
     insertAtTail(5);
 
+    deleteAtHead();
+    deleteAtTail();
     displayLengthOfSinglyLinkedList();
     displaySinglyLinkedList();
 
