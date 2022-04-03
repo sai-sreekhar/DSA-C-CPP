@@ -24,17 +24,19 @@ void freeNode(node *nodeToFree);
 int getLengthOfSinglyLinkedList();
 void displaySinglyLinkedList();
 void bubbleSortSinglyLinkedList();
+void reverseSinglyLinkedList();
 
 int main()
 {
-    // insertAtTail(5000);
-    // insertAtHead(10000);
-    // insertAtHead(2000);
-    // insertAtHead(30000);
+    insertAtTail(5000);
+    insertAtHead(10000);
+    insertAtHead(2000);
+    insertAtHead(30000);
     // insertAtPos(10, 5);
 
     // deleteAtPos(7);
-    bubbleSortSinglyLinkedList();
+    reverseSinglyLinkedList();
+    // bubbleSortSinglyLinkedList();
     displaySinglyLinkedList();
 
     return 0;
@@ -244,7 +246,7 @@ void displaySinglyLinkedList()
 
     while (curNode != NULL)
     {
-        printf("The element as position %d is %d %p\n", pos, curNode->data, curNode->next);
+        printf("The element as position %d is %d\n", pos, curNode->data);
         curNode = curNode->next;
         pos++;
     }
@@ -289,5 +291,23 @@ void bubbleSortSinglyLinkedList()
         }
     }
 
+    return;
+}
+
+void reverseSinglyLinkedList()
+{
+    node* pvsNode = NULL;
+    node* curNode = head;
+    node* nextNode = NULL;
+
+    while (curNode != NULL)
+    {
+        nextNode = curNode->next;
+        curNode->next = pvsNode;
+        pvsNode = curNode;
+        curNode = nextNode;
+    }
+    head = pvsNode;
+    
     return;
 }
