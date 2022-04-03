@@ -116,28 +116,29 @@ void insertAtPos(int data, int pos)
     if (pos == 1)
     {
         insertAtHead(data);
-    }
-    else if (pos == getLengthOfSinglyLinkedList() + 1)
-    {
-        insertAtTail(data);
-    }
-    else
-    {
-        int curPos = 1;
-        node* curNode = head;
-        node* pvsNode;
-        while (curPos != pos)
-        {
-            curPos++;
-            pvsNode = curNode;
-            curNode = curNode->next;
-        }
-
-        pvsNode->next = link;
-        link->next = curNode;
-        link->data = data;
+        return;
     }
 
+    int curPos = 1;
+    node* curNode = head;
+    node* pvsNode = NULL;
+    while ((curPos != pos) && (curNode != NULL))
+    {
+        curPos++;
+        pvsNode = curNode;
+        curNode = curNode->next;
+    }
+
+    pvsNode->next = link;
+    link->next = curNode;
+    link->data = data;
+
+    return;
+}
+
+void deleteAtPos(int pos)
+{
+    
     return;
 }
 
@@ -177,7 +178,7 @@ int main()
     insertAtHead(1);
     insertAtHead(2);
     insertAtHead(3);
-    insertAtPos(10,4);
+    insertAtPos(10,6);
 
     displaySinglyLinkedList();
 
