@@ -22,11 +22,33 @@ void insertAtHead(int data)
         printf("Memory Allocation Failed");
         return;
     }
-    
+
     link->data = data;
     link->next = head;
     head = link;
 
+    return;
+}
+
+void deleteAtHead()
+{
+    node *newHead = head->next;
+    free(head);
+    head = newHead;
+}
+
+void displayLengthOfSinglyLinkedList()
+{
+    int length = 0;
+    node *curNode = head;
+
+    while (curNode != NULL)
+    {
+        curNode = curNode->next;
+        length++;
+    }
+
+    printf("The length Of SinglyLinkedList is %d\n",length);
     return;
 }
 
@@ -49,7 +71,10 @@ int main()
 {
     insertAtHead(100);
     insertAtHead(1000);
-    
+    insertAtHead(5);
+
+    deleteAtHead();
+    displayLengthOfSinglyLinkedList();
     displaySinglyLinkedList();
 
     return 0;
