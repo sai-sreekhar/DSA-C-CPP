@@ -23,17 +23,18 @@ void freeAllNodes();
 void freeNode(node *nodeToFree);
 int getLengthOfSinglyLinkedList();
 void displaySinglyLinkedList();
+void bubbleSortSinglyLinkedList();
 
 int main()
 {
-    insertAtTail(5000);
-    insertAtHead(10000);
-    insertAtHead(2000);
-    insertAtHead(30000);
-    //insertAtPos(10,5);
+    // insertAtTail(5000);
+    // insertAtHead(10000);
+    // insertAtHead(2000);
+    // insertAtHead(30000);
+    // insertAtPos(10, 5);
 
     // deleteAtPos(7);
-    freeAllNodes();
+    bubbleSortSinglyLinkedList();
     displaySinglyLinkedList();
 
     return 0;
@@ -146,8 +147,8 @@ void insertAtPos(int data, int pos)
     }
 
     int curPos = 1;
-    node* curNode = head;
-    node* pvsNode = NULL;
+    node *curNode = head;
+    node *pvsNode = NULL;
     while ((curPos != pos) && (curNode != NULL))
     {
         curPos++;
@@ -177,8 +178,8 @@ void deleteAtPos(int pos)
     }
 
     int curPos = 1;
-    node* curNode = head;
-    node* pvsNode = NULL;
+    node *curNode = head;
+    node *pvsNode = NULL;
 
     while ((curPos != pos) && (curNode != NULL))
     {
@@ -192,7 +193,7 @@ void deleteAtPos(int pos)
         printf("Invalid delete position\n");
         return;
     }
-    
+
     pvsNode->next = curNode->next;
     freeNode(curNode);
 
@@ -201,10 +202,10 @@ void deleteAtPos(int pos)
 
 void freeAllNodes()
 {
-    node* curNode = head;
+    node *curNode = head;
     while (curNode != NULL)
     {
-        node* tempNode = curNode;
+        node *tempNode = curNode;
         curNode = curNode->next;
 
         freeNode(tempNode);
@@ -216,7 +217,7 @@ void freeAllNodes()
 
 void freeNode(node *nodeToFree)
 {
-    memset(nodeToFree,0,sizeof(node));
+    memset(nodeToFree, 0, sizeof(node));
     free(nodeToFree);
 
     return;
@@ -233,8 +234,6 @@ int getLengthOfSinglyLinkedList()
         length++;
     }
 
-    printf("The length Of SinglyLinkedList is %d\n", length);
-    
     return length;
 }
 
@@ -245,9 +244,49 @@ void displaySinglyLinkedList()
 
     while (curNode != NULL)
     {
-        printf("The element as position %d is %d %p\n", pos, curNode->data,curNode->next);
+        printf("The element as position %d is %d %p\n", pos, curNode->data, curNode->next);
         curNode = curNode->next;
         pos++;
+    }
+
+    return;
+}
+
+void bubbleSortSinglyLinkedList()
+{
+    int length = getLengthOfSinglyLinkedList();
+
+    if (length == 0)
+    {
+        printf("The SinglyLinkedList is Empty\n");
+        return;
+    }
+    
+    if (length == 1)
+    {
+        return;
+    }
+
+    node *currentNode = NULL;
+    node *nextNode = NULL;
+
+    for (int i = 0; i < length - 1; i++)
+    {
+        currentNode = head;
+        nextNode = head->next;
+
+        for (int j = 0; j < length - i - 1; j++)
+        {
+            if (currentNode->data > nextNode->data)
+            {
+                int tempData = currentNode->data;
+                currentNode->data = nextNode->data;
+                nextNode->data = tempData;
+            }
+
+            currentNode = currentNode->next;
+            nextNode = nextNode->next;
+        }
     }
 
     return;
