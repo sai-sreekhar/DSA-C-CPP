@@ -13,6 +13,32 @@ typedef struct Node
 
 node *head = NULL;
 
+void insertAtHead(int data);
+void deleteAtHead();
+void insertAtTail(int data);
+void deleteAtTail();
+void insertAtPos(int data, int pos);
+void deleteAtPos(int pos);
+void freeAllNodes();
+void freeNode(node *nodeToFree);
+int getLengthOfSinglyLinkedList();
+void displaySinglyLinkedList();
+
+int main()
+{
+    insertAtTail(5000);
+    insertAtHead(10000);
+    insertAtHead(2000);
+    insertAtHead(30000);
+    //insertAtPos(10,5);
+
+    // deleteAtPos(7);
+    freeAllNodes();
+    displaySinglyLinkedList();
+
+    return 0;
+}
+
 void insertAtHead(int data)
 {
     node *link = (node *)malloc(sizeof(node));
@@ -39,7 +65,7 @@ void deleteAtHead()
     }
 
     node *newHead = head->next;
-    free(head);
+    freeNode(head);
     head = newHead;
 
     return;
@@ -97,7 +123,7 @@ void deleteAtTail()
         curNode = curNode->next;
     }
 
-    free((curNode->next)->next);
+    freeNode((curNode->next)->next);
     curNode->next = NULL;
 
     return;
@@ -153,7 +179,7 @@ void deleteAtPos(int pos)
     int curPos = 1;
     node* curNode = head;
     node* pvsNode = NULL;
-    
+
     while ((curPos != pos) && (curNode != NULL))
     {
         curPos++;
@@ -168,7 +194,30 @@ void deleteAtPos(int pos)
     }
     
     pvsNode->next = curNode->next;
-    free(curNode);
+    freeNode(curNode);
+
+    return;
+}
+
+void freeAllNodes()
+{
+    node* curNode = head;
+    while (curNode != NULL)
+    {
+        node* tempNode = curNode;
+        curNode = curNode->next;
+
+        freeNode(tempNode);
+    }
+
+    head = NULL;
+    return;
+}
+
+void freeNode(node *nodeToFree)
+{
+    memset(nodeToFree,0,sizeof(node));
+    free(nodeToFree);
 
     return;
 }
@@ -185,6 +234,7 @@ int getLengthOfSinglyLinkedList()
     }
 
     printf("The length Of SinglyLinkedList is %d\n", length);
+    
     return length;
 }
 
@@ -195,24 +245,10 @@ void displaySinglyLinkedList()
 
     while (curNode != NULL)
     {
-        printf("The element as position %d is %d\n", pos, curNode->data);
+        printf("The element as position %d is %d %p\n", pos, curNode->data,curNode->next);
         curNode = curNode->next;
         pos++;
     }
 
     return;
-}
-
-int main()
-{
-    insertAtTail(5);
-    insertAtHead(1);
-    insertAtHead(2);
-    insertAtHead(3);
-    insertAtPos(10,5);
-
-    deleteAtPos(7);
-    displaySinglyLinkedList();
-
-    return 0;
 }
