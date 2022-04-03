@@ -138,7 +138,38 @@ void insertAtPos(int data, int pos)
 
 void deleteAtPos(int pos)
 {
+    if (head == NULL)
+    {
+        printf("The SinglyLinkedList is empty\n");
+        return;
+    }
+
+    if (pos == 1)
+    {
+        deleteAtHead();
+        return;
+    }
+
+    int curPos = 1;
+    node* curNode = head;
+    node* pvsNode = NULL;
     
+    while ((curPos != pos) && (curNode != NULL))
+    {
+        curPos++;
+        pvsNode = curNode;
+        curNode = curNode->next;
+    }
+
+    if (curNode == NULL)
+    {
+        printf("Invalid delete position\n");
+        return;
+    }
+    
+    pvsNode->next = curNode->next;
+    free(curNode);
+
     return;
 }
 
@@ -178,8 +209,9 @@ int main()
     insertAtHead(1);
     insertAtHead(2);
     insertAtHead(3);
-    insertAtPos(10,6);
+    insertAtPos(10,5);
 
+    deleteAtPos(7);
     displaySinglyLinkedList();
 
     return 0;
