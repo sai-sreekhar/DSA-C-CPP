@@ -35,6 +35,37 @@ void deleteAtHead()
     node *newHead = head->next;
     free(head);
     head = newHead;
+    return;
+}
+
+void insertAtTail(int data)
+{
+    node *link = (node *)malloc(sizeof(node));
+
+    if (link == NULL)
+    {
+        printf("Memory Allocation Failed");
+        return;
+    }
+
+    link->data = data;
+    link->next = NULL;
+
+    if (head == NULL)
+    {
+        head = link;
+        link->next = NULL;
+        return;
+    }
+    
+    node *curNode = head;
+    while (curNode->next != NULL)
+    {
+        curNode = curNode->next;
+    }
+    curNode->next = link;
+
+    return;
 }
 
 void displayLengthOfSinglyLinkedList()
@@ -69,11 +100,10 @@ void displaySinglyLinkedList()
 
 int main()
 {
-    insertAtHead(100);
+    // insertAtHead(100);
     insertAtHead(1000);
-    insertAtHead(5);
+    insertAtTail(5);
 
-    deleteAtHead();
     displayLengthOfSinglyLinkedList();
     displaySinglyLinkedList();
 
