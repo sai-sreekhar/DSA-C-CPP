@@ -290,6 +290,7 @@ void displayDoublyLinkedList()
     if (head == NULL)
     {
         printf("Doubly linkedlist is empty\n");
+        return;
     }
 
     node *curNode = head;
@@ -310,6 +311,7 @@ void displayReverseDoublyLinkedList()
     if (head == NULL)
     {
         printf("Doubly linkedlist is empty\n");
+        return;
     }
 
     node *curNode = tail;
