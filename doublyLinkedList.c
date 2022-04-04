@@ -72,7 +72,7 @@ void insertAtHead(int data)
 
         return;
     }
-    
+
     head->pvs = link;
     link->next = head;
     link->pvs = NULL;
@@ -93,11 +93,11 @@ void deleteAtHead()
     {
         freeNode(head);
         head = NULL;
-        tail= NULL;
+        tail = NULL;
 
         return;
     }
-    
+
     node *newHead = head->next;
     newHead->pvs = NULL;
     freeNode(head);
@@ -146,11 +146,11 @@ void deleteAtTail()
     {
         freeNode(head);
         head = NULL;
-        tail= NULL;
+        tail = NULL;
         return;
     }
 
-    node* newTail = tail->pvs;
+    node *newTail = tail->pvs;
     newTail->next = NULL;
     freeNode(tail);
     tail = newTail;
@@ -195,7 +195,7 @@ void insertAtPos(int data, int pos)
 
         return;
     }
-    
+
     curNode->pvs = link;
 
     return;
@@ -240,7 +240,7 @@ void deleteAtPos(int pos)
         tail = pvsNode;
         return;
     }
-    
+
     (curNode->next)->pvs = pvsNode;
     freeNode(curNode);
 
@@ -291,7 +291,7 @@ void displayDoublyLinkedList()
     {
         printf("Doubly linkedlist is empty\n");
     }
-    
+
     node *curNode = head;
     int pos = 1;
 
@@ -311,12 +311,12 @@ void displayReverseDoublyLinkedList()
     {
         printf("Doubly linkedlist is empty\n");
     }
-    
+
     node *curNode = tail;
 
     while (curNode != NULL)
     {
-        printf("The element is %d\n",curNode->data);
+        printf("The element is %d\n", curNode->data);
         curNode = curNode->pvs;
     }
 
@@ -332,7 +332,7 @@ void bubbleSortDoublyLinkedList()
         printf("The SinglyLinkedList is Empty\n");
         return;
     }
-    
+
     if (length == 1)
     {
         return;
@@ -365,9 +365,9 @@ void bubbleSortDoublyLinkedList()
 
 void reverseDoublyLinkedList()
 {
-    node* pvsNode = NULL;
-    node* curNode = head;
-    node* nextNode = NULL;
+    node *pvsNode = NULL;
+    node *curNode = head;
+    node *nextNode = NULL;
 
     tail = head;
     while (curNode != NULL)
@@ -379,6 +379,6 @@ void reverseDoublyLinkedList()
         curNode = nextNode;
     }
     head = pvsNode;
-    
+
     return;
 }
