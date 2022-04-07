@@ -4,14 +4,9 @@
 #include <stdbool.h>
 #include <math.h>
 #include <ctype.h>
+#include "common.h"
 
 #define MAX_LEN 100
-typedef struct NODE
-{
-    int data;
-    struct NODE *leftChild;
-    struct NODE *rightChild;
-} node;
 
 node *root = NULL;
 int idx = 0;
@@ -25,6 +20,7 @@ void deleteNode(int data);
 node *getInOrderSuccNode(node *currentNode);
 int inorderTraversalArr(node *root, int *arr, int i);
 void addToArr(node *currentNode, int level, int *arr);
+void addToArray(int *arr);
 int heightOfTree(node* currentNode);
 int max(int a,int b);
 
@@ -44,21 +40,23 @@ int main()
     insertNode(49);
     insertNode(31);
 
+
     // deleteNode(4)
     
-    int height = heightOfTree(root);
+    // int height = heightOfTree(root);
 
-    for (int j = 0; j < height; j++)
-    {
-        addToArr(root,j,binaryTreeArr);
-    }
+    // for (int j = 0; j < height; j++)
+    // {
+    //     addToArr(root,j,binaryTreeArr);
+    // }
+
+    addToArray(binaryTreeArr);
 
     printf("The Binary Tree converted to array is: ");
     for (int i = 0; i < 15; i++)
     {
         printf("%d ",binaryTreeArr[i]);
     }
-    
     printf("\n");
 
     printf("Pre Order Traversal of binary tree: ");
@@ -269,6 +267,45 @@ void addToArr(node *currentNode, int level, int *arr)
         addToArr(currentNode->leftChild,level-1,arr);
         addToArr(currentNode->rightChild,level-1,arr);
     }
+}
+
+void addToArray(int *arr)
+{   
+    if (root == NULL)
+    {
+        printf("Root is NULL");
+        return;
+    }
+
+    enqueue(root);
+
+    while (isEmpty() == false)
+    {
+        node* dequeuedNode = dequeue();
+
+        if (dequeuedNode != NULL)
+        {
+            if (dequeuedNode->leftChild != NULL)
+            {
+                enqueue(dequeuedNode->leftChild);
+            }
+
+            if (dequeuedNode->rightChild != NULL)
+            {
+                enqueue(dequeuedNode->rightChild);
+            }
+
+        
+            arr[idx] = dequeuedNode->data;
+        }
+        else
+        {
+            arr[idx] = 0;
+        }
+
+        idx++;
+    }
+    
 }
 
 int heightOfTree(node* currentNode)
