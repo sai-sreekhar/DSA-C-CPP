@@ -8,7 +8,7 @@
 #include <cctype>
 #include <cstdarg>
 
-// #define DEBUG
+#define DEBUG
 // #undef DEBUG
 
 #ifdef DEBUG
@@ -52,7 +52,8 @@ Node *rightLeftRotate(Node *node);
 void inorderTraversalOfAVLTree(Node *currNode);
 bool isTreeBalanced(Node *currNode);
 void displayHeightsOfAllNodes(Node* currNode);
-Node* getPredecessorNode(Node* node);
+Node* getSuccessorNode(Node* node);
+Node* deleteNode(Node* node,int key);
 
 int main()
 {
@@ -70,6 +71,29 @@ int main()
     root = insertNode(root, 19);
     root = insertNode(root, 16);
     root = insertNode(root, 20);
+
+    cout << "InOrderTraversal Of Tree is:" << endl;
+    inorderTraversalOfAVLTree(root);
+
+    // if (isTreeBalanced(root) == true)
+    // {
+    //     cout << "Output is correct. Its an AVL Tree"<< endl;
+    // }
+    // else
+    // {
+    //     cout << "Output is incorrect. Its not an AVL Tree"<< endl;
+    // }
+
+    root = deleteNode(root,8);
+    inorderTraversalOfAVLTree(root);
+    root = deleteNode(root,7);
+    inorderTraversalOfAVLTree(root);
+    root = deleteNode(root,11);
+    inorderTraversalOfAVLTree(root);
+    root = deleteNode(root,14);
+    inorderTraversalOfAVLTree(root);
+    root = deleteNode(root,17);
+    inorderTraversalOfAVLTree(root);
 
     // root = insertNode(root, 8);
     // root = insertNode(root, 6);
@@ -89,7 +113,7 @@ int main()
         cout << "Output is incorrect. Its not an AVL Tree"<< endl;
     }
     
-    displayHeightsOfAllNodes(root);
+    // displayHeightsOfAllNodes(root);
     return 0;
 }
 
@@ -102,7 +126,7 @@ int heightOfNode(Node *currNode)
     else
     {
         TRACE("Calculating Height Of tree with currentNode key %d\n", currNode->key);
-        return 1 + max(heightOfNode(currNode->leftChild), heightOfNode(currNode->rightChild));
+        return 1 + max(heightOfNode(currNode->rightChild), heightOfNode(currNode->leftChild));
     }
 }
 
@@ -198,46 +222,46 @@ int getBalanceFactor(Node *node)
 
 Node *leftLeftRotate(Node *node)
 {
-    Node *tempNode;
-    tempNode = node->leftChild;
+    Node *childNode;
+    childNode = node->leftChild;
 
-    TRACE("Left Left Rotation with node key %d tempNode key %d\n", node->key, tempNode->key);
-    node->leftChild = tempNode->rightChild;
-    tempNode->rightChild = node;
+    TRACE("Left Left Rotation with node key %d childNode key %d\n", node->key, childNode->key);
+    node->leftChild = childNode->rightChild;
+    childNode->rightChild = node;
 
-    tempNode->height = heightOfNode(tempNode);
+    childNode->height = heightOfNode(childNode);
     node->height = heightOfNode(node);
-    return tempNode;
+    return childNode;
 }
 
 Node *rightRightRotate(Node *node)
 {
-    Node *tempNode;
-    tempNode = node->rightChild;
+    Node *childNode;
+    childNode = node->rightChild;
 
-    TRACE("Right Right Rotation with node key %d tempNode key %d\n", node->key, tempNode->key);
-    node->rightChild = tempNode->leftChild;
-    tempNode->leftChild = node;
+    TRACE("Right Right Rotation with node key %d childNode key %d\n", node->key, childNode->key);
+    node->rightChild = childNode->leftChild;
+    childNode->leftChild = node;
 
-    tempNode->height = heightOfNode(tempNode);
+    childNode->height = heightOfNode(childNode);
     node->height = heightOfNode(node);
-    return tempNode;
+    return childNode;
 }
 
 Node *leftRightRotate(Node *node)
 {
     TRACE("Processing Left Right Rotation with node key %d\n", node->key);
 
-    Node *tempNode;
-    tempNode = node->leftChild;
+    Node *childNode;
+    childNode = node->leftChild;
 
-    TRACE("Right Right Rotation with node key %d tempNode key %d\n", node->key, tempNode->key);
-    node->leftChild = rightRightRotate(tempNode);
+    TRACE("Right Right Rotation with node key %d childNode key %d\n", node->key, childNode->key);
+    node->leftChild = rightRightRotate(childNode);
 
-    tempNode->height = heightOfNode(tempNode);
+    childNode->height = heightOfNode(childNode);
     node->height = heightOfNode(node);
 
-    TRACE("Left Left Rotation with node key %d tempNode key %d\n", node->key, tempNode->key);
+    TRACE("Left Left Rotation with node key %d childNode key %d\n", node->key, childNode->key);
     return leftLeftRotate(node);
 }
 
@@ -245,16 +269,16 @@ Node *rightLeftRotate(Node *node)
 {
     TRACE("Processing Right Left Rotation with node key %d\n", node->key);
 
-    Node *tempNode;
-    tempNode = node->rightChild;
+    Node *childNode;
+    childNode = node->rightChild;
 
-    TRACE("Left Left Rotation with node key %d tempNode key %d\n", node->key, tempNode->key);
-    node->rightChild = leftLeftRotate(tempNode);
+    TRACE("Left Left Rotation with node key %d childNode key %d\n", node->key, childNode->key);
+    node->rightChild = leftLeftRotate(childNode);
 
-    tempNode->height = heightOfNode(tempNode);
+    childNode->height = heightOfNode(childNode);
     node->height = heightOfNode(node);
 
-    TRACE("Right Right Rotation with node key %d tempNode key %d\n", node->key, tempNode->key);
+    TRACE("Right Right Rotation with node key %d childNode key %d\n", node->key, childNode->key);
     return rightRightRotate(node);
 }
 
@@ -287,6 +311,11 @@ bool isTreeBalanced(Node *currNode)
 
 void displayHeightsOfAllNodes(Node* currNode)
 {
+    if (currNode == NULL)
+    {
+        return;
+    }
+    
     cout << "Height of Node with key" << currNode->key << "is: " << heightOfNode(currNode) << endl;
 
     if (currNode->leftChild != NULL)
@@ -300,12 +329,12 @@ void displayHeightsOfAllNodes(Node* currNode)
     }  
 }
 
-Node* getPredecessorNode(Node* node)
+Node* getSuccessorNode(Node* node)
 {
     Node* currNode = node;
     while (currNode->leftChild != NULL)
     {
-        TRACE("Calculating Predecessor Node with currentNode key %d",currNode->key);
+        TRACE("Calculating Successor Node with currentNode key %d\n",currNode->key);
         currNode = currNode->leftChild;
     }
 
@@ -317,32 +346,85 @@ Node* deleteNode(Node* node,int key)
 {
     if (node == NULL)
     {
-        TRACE("Deleting Node When Root is NULL given key is %d",key);
+        TRACE("Deleting Node When node is NULL given key is %d\n",key);
         return node;
     }
 
     if (key < node->key)
     {
-        TRACE("Deleting Node when key %d is less than currentNode key %d",key,node->key);
-        deleteNode(node->leftChild,key);
+        TRACE("Deleting Node when key %d is less than currentNode key %d\n",key,node->key);
+        node->leftChild = deleteNode(node->leftChild,key);
     }
     else if (key > node->key)
     {
-        TRACE("Deleting Node when key %d is more than currentNode key %d",key,node->key);
-        deleteNode(node->rightChild,key);
+        TRACE("Deleting Node when key %d is more than currentNode key %d\n",key,node->key);
+        node->rightChild = deleteNode(node->rightChild,key);
     }
     else
     {
-        TRACE("Deleting Node when key %d is equal to currentNode key %d",key,node->key);
-        if ((node->leftChild == NULL) && (node->rightChild == NULL))
+        if ((node->leftChild == NULL) || (node->rightChild == NULL))
         {
-            
+            Node* childNode = node->leftChild ? node->leftChild : node->rightChild;
+
+            if (childNode == NULL)
+            {
+                TRACE("Node with key %dhas no child nodes\n",node->key);
+                childNode = node;
+                node = NULL;
+            }
+            else
+            {
+                TRACE("Node has one child nodekey is %d\n",node->key);
+                *node = *childNode;
+            }
+            delete childNode;
+            TRACE("Deletion done of key %d\n",key);
         }
-        
+        else
+        {
+            TRACE("Node has 2 children with key %d\n",node->key);
+            Node* successorNode = getSuccessorNode(node->rightChild);
+            TRACE("Successor Node of node with key %d has successor key as %d\n",node->key,successorNode->key);
+            node->key = successorNode->key;
+            node->rightChild = deleteNode(node->rightChild,successorNode->key);
+        }
+    }
+
+    if (node == NULL)
+    {
+        return node;
     }
     
-    
+    TRACE("Updating height of currentNode with key %d\n",node->key);
+    node->height = heightOfNode(node);
 
-
+    TRACE("CAlculating balance Factor with key %d\n",node->key);
+    int balanceFactor = getBalanceFactor(node);
     
+    TRACE("The Balance Factor with key %d is %d\n",node->key,balanceFactor);
+    if ((balanceFactor > 1) && (key < node->leftChild->key))
+    {
+        TRACE("Calling rightRightRotate Function for key %d\n", node->key);
+        return leftLeftRotate(node);
+    }
+
+    if ((balanceFactor > 1) && (key > node->leftChild->key))
+    {
+        TRACE("Calling leftRightRotate Function with key %d\n", node->key);
+        return leftRightRotate(node);
+    }
+
+    if ((balanceFactor < -1) && (key > node->rightChild->key))
+    {
+        TRACE("Calling leftleftRotate Function with key %d\n", node->key);
+        return rightRightRotate(node);
+    }
+
+    if ((balanceFactor < -1) && (key < node->rightChild->key))
+    {
+        TRACE("Calling rightLeftRotate Function with key %d\n", node->key);
+        return rightLeftRotate(node);
+    }
+
+    return node;
 }
