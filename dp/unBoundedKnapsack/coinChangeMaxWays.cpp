@@ -21,50 +21,50 @@ using namespace std;
 void printTrace(int line, const char *fileName, const char *msg, ...)
 {
     va_list args;
-    char buffer[1024 + 2] = {0};
+    char buffer[1024+2] = { 0 };
 
-    snprintf(buffer, sizeof(buffer), "%s(%d) : ", fileName, line);
-    int stringLength = strnlen(buffer, 1024);
+    snprintf(buffer, sizeof(buffer), "%s(%d) : " , fileName, line);
+    int stringLength = strnlen(buffer,1024);
     int remainingBufferSize = 1024 - stringLength;
     va_start(args, msg);
-    vsnprintf(buffer + stringLength, remainingBufferSize, msg, args);
+    vsnprintf(buffer+stringLength,remainingBufferSize, msg, args);
     va_end(args);
     cout << buffer << flush;
 }
 
-bool subSetSumDP(int *arr, int requiredSum, int n)
+int coinChangeMaxWaysDP(int *coinArr, int requiredSum, int n)
 {
-    bool dp[n + 1][requiredSum + 1];
+    int dp[n + 1][requiredSum + 1];
     for (int i = 0; i < n + 1; i++)
     {
         for (int j = 0; j < requiredSum + 1; j++)
         {
             if (j == 0)
             {
-                dp[i][j] = true;
+                dp[i][j] = 1;
             }
             else if (i == 0)
             {
-                dp[i][j] = false;
+                dp[i][j] = 0;
             }
-            else if (arr[i - 1] <= j)
+            else if (coinArr[i - 1] <= j)
             {
-                dp[i][j] = dp[i - 1][j - arr[i - 1]] || dp[i - 1][j];
+                dp[i][j] = dp[i][j - coinArr[i - 1]] + dp[i - 1][j];
             }
-            else if (arr[i - 1] > j)
+            else
             {
                 dp[i][j] = dp[i - 1][j];
             }
         }
     }
-
+    
     return dp[n][requiredSum];
 }
 
 int main()
 {
-    int arr[5] = {2, 3, 7, 8, 10};
+    int coinArr[3] = {1,2,3};
     int requiredSum = 5;
-    cout << subSetSumDP(arr, requiredSum, 5) << endl;
+    cout << coinChangeMaxWaysDP(coinArr,requiredSum,3) << endl;
     return 0;
 }
