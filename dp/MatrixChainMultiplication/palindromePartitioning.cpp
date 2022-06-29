@@ -34,20 +34,6 @@ void printTrace(int line, const char *fileName, const char *msg, ...)
     cout << buffer << flush;
 }
 
-// ----->GENERAL FORMAT
-// int mcmDp(int *arr,int i,int j)
-// {
-//     if (i > j)
-//     {
-//         return 0;
-//     }
-//     for (int k = i; k < j; k++)
-//     {
-//         return (mcmDp(arr,i,k) + mcmDp(arr,k+1,j));
-//     }
-// }
-//<-------------------
-
 int min(int a, int b)
 {
     return a < b ? a : b;
