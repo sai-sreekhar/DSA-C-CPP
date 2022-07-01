@@ -206,11 +206,15 @@ int main()
 {
 
     stringHash myHash;
+
     myHash.insert("21BKT0162", "SaiSreekar");
     myHash.insert("21BDS0162", "Sai1");
     myHash.insert("21BKT2610", "Sai2");
     myHash.insert("21BKT6210","Sai3");
+
     cout << myHash.search("21BKT2610") << endl;
+
     myHash.erase("21BKT2610");
+    
     myHash.print();
 }
