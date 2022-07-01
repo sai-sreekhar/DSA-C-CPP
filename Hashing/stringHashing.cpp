@@ -67,7 +67,7 @@ class stringHash
         }
 
     public:
-
+    
         stringHash()
         {
             keysPresent = 0;
@@ -79,6 +79,12 @@ class stringHash
             if (isFull())
             {
                 cout << ("ERROR : Hash Table Full\n");
+                return;
+            }
+
+            if(search(rollNo) != nullptr)
+            {
+                cout << "Roll Number Already Present" << endl;
                 return;
             }
 
@@ -162,13 +168,14 @@ class stringHash
             }
         }
 
-        bool search(string s)
+        student* search(string s)
         {
             int hashVal = computeHash(s);
 
             if (hashTable[hashVal] == nullptr)
             {
-                return false;
+                // cout << s << " Roll Number not found" << endl;
+                return nullptr;
             }
             else
             {
@@ -177,7 +184,9 @@ class stringHash
                 {
                     if (*(presentStudent->rollNo) == s)
                     {
-                        return true;
+                        // cout << "Found" << endl;
+                        // cout << "Name: " << *(presentStudent->name) << "Roll Number: " << s << endl;
+                        return presentStudent;
                     }
                     else
                     {
@@ -185,7 +194,8 @@ class stringHash
                     }
                 }
             }
-            return false;
+            // cout << s << " Roll Number not found" << endl;
+            return nullptr;
         }
 
         void print()
@@ -206,15 +216,70 @@ int main()
 {
 
     stringHash myHash;
+    char choice;
+    cout << "Enter\n i for inserting\n d for deleting\n s for searching\n q to quit" << endl;
+    cin >> choice;
+    while (choice != 'q')
+    {
+        switch (choice)
+        {
+            case 'i':
+                { 
+                    cout << "You choose Insert" << endl;
+                    string  rollNo;
+                    string  name;
+                    cout << "Enter RollNo: " << endl;
+                    cin >> rollNo;
+                    cout << "Enter Name: " << endl;
+                    cin >> name;
+                    myHash.insert(rollNo,name);
 
-    myHash.insert("21BKT0162", "SaiSreekar");
-    myHash.insert("21BDS0162", "Sai1");
-    myHash.insert("21BKT2610", "Sai2");
-    myHash.insert("21BKT6210","Sai3");
+                    break;
+                }
+            case 'd':
+                {
+                    cout << "You Choose Delete" << endl;
+                    string  rollNo;
+                    cout << "Enter RollNo: " << endl;
+                    cin >> rollNo;
+                    myHash.erase(rollNo);
 
-    cout << myHash.search("21BKT2610") << endl;
+                    break;
+                }
+            case 's':
+                {
+                    cout << "You Choose Search" << endl;
+                    string  rollNo;
+                    cout << "Enter RollNo: " << endl;
+                    cin >> rollNo;
 
-    myHash.erase("21BKT2610");
+                    student* res = myHash.search(rollNo);
+                    if(res == nullptr)
+                    {
+                        cout << rollNo << " Roll Number Not Found" << endl;
+                    }
+                    else
+                    {
+                        cout << "Found" << endl;
+                        cout << "Name: " << *(res->name) << " RollNumber: " << *(res->rollNo) << endl;
+                    }
+
+                    break;
+                }
+            default:
+                {
+                    cout << "Entered Invalid Choice" << endl;
+                    break;
+                }
+        }
+        cout << "Enter i for inserting\n d for deleting\n s for searching\n q to quit" << endl;
+        cin >> choice;
+    }
+
+    if (choice == 'q')
+    {
+        cout << "Exited" << endl;
+    }
     
-    myHash.print();
+    return 0;
 }
