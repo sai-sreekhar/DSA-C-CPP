@@ -12,6 +12,7 @@
         "semaphore": "cpp",
         "valarray": "cpp",
         "*.tcc": "c",
-        "list": "c"
+        "list": "c",
+        "cstdlib": "cpp"
     }
 }
