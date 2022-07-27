@@ -1,0 +1,2 @@
+has an array most prolly stack/heap. In heap we may use sort
+bruteforce in stack qsns will be o(n^2).Second loop i.e j loop dependent on i we can improvize using stack
