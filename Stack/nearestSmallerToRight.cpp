@@ -56,7 +56,7 @@ int main()
         }
         else if ((s.size() > 0) && (s.top() >= arr[i]))
         {
-            while ((s.size() > 0) && (s.top() >= v[i]))
+            while ((s.size() > 0) && (s.top() >= arr[i]))
             {
                 s.pop();
             }
