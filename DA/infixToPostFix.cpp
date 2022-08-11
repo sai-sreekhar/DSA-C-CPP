@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstring>
 
+#define MAX_SIZE_EXP 100
+
 using namespace std;
 typedef struct Stack
 {
@@ -42,7 +44,9 @@ char peek(Stack *stack)
 char pop(Stack *stack)
 {
 	if (!isEmpty(stack))
+	{
 		return stack->array[stack->top--];
+	}
 	return '#';
 }
 
@@ -53,8 +57,8 @@ void push(Stack *stack, char op)
 
 int isOperand(char ch)
 {
-    return (ch >= 'a' && ch <= 'z') ||
-           (ch >= 'A' && ch <= 'Z');
+	return (ch >= 'a' && ch <= 'z') ||
+		   (ch >= 'A' && ch <= 'Z');
 }
 
 int precedence(char op)
@@ -74,49 +78,85 @@ int precedence(char op)
 	return -1;
 }
 
-int infixToPostfix(char *exp)
+void infixToPostfix(char *exp)
 {
 	int i, k;
+	int lenOfExp = strlen(exp);
 	struct Stack *stack = createStack(strlen(exp));
 	if (!stack)
-		return -1;
+	{
+		return;
+	}
 
+	int openingBracketCount = 0;
+	int closingBracketCount = 0;
+	int operatorCount = 0;
 	for (i = 0, k = -1; exp[i]; ++i)
 	{
 		if (isOperand(exp[i]))
+		{
 			exp[++k] = exp[i];
+		}
 
 		else if (exp[i] == '(')
+		{
+			openingBracketCount++;
 			push(stack, exp[i]);
+		}
 
 		else if (exp[i] == ')')
 		{
+			closingBracketCount++;
 			while (!isEmpty(stack) && peek(stack) != '(')
+			{
 				exp[++k] = pop(stack);
-			if (!isEmpty(stack) && peek(stack) != '(')
-				return -1;
+			}
+			if (isEmpty(stack))
+			{
+				cout << "Invalid Expression\n";
+				return;
+			}
 			else
+			{
 				pop(stack);
+			}
 		}
 		else
 		{
-			while (!isEmpty(stack) &&
-				   precedence(exp[i]) <= precedence(peek(stack)))
+			operatorCount++;
+			while (!isEmpty(stack) && precedence(exp[i]) <= precedence(peek(stack)))
+			{
 				exp[++k] = pop(stack);
+			}
 			push(stack, exp[i]);
 		}
 	}
-	
+
 	while (!isEmpty(stack))
+	{
 		exp[++k] = pop(stack);
+	}
 
 	exp[++k] = '\0';
-	printf("%s", exp);
+	if (openingBracketCount != closingBracketCount)
+	{
+		cout << "Invalid Expression\n";
+		return;
+	}
+	if (lenOfExp - (2 * operatorCount + 1) - (openingBracketCount + closingBracketCount) != 0)
+	{
+		cout << "Invalid Expression\n";
+		return;
+	}
+
+	printf("%s\n", exp);
 }
 
 int main()
 {
-	char exp[] = "a+b*(c^d-e)^(f+g*h)-i";
+	char exp[MAX_SIZE_EXP];
+	cout << "Enter the expression: ";
+	scanf("%s", exp);
 	infixToPostfix(exp);
 	return 0;
 }

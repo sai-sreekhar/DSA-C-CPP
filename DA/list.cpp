@@ -13,7 +13,7 @@ void insert(int *arr, int pos, int val, int *lastIdx)
             return;
         }
 
-        arr[pos - 1] = val;
+        arr[0] = val;
         *lastIdx = 0;
         return;
     }
