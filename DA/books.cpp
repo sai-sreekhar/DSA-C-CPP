@@ -39,7 +39,7 @@ void pop()
 {
     if (top == -1)
     {
-        cout << "UUNDERFLOW\n";
+        cout << "UNDERFLOW\n";
         return;
     }
 
@@ -66,7 +66,7 @@ void display()
 {
     for (int i = 0; i <= top; i++)
     {
-        cout << "Book at pos " << i + 1 << " has Title: " << bookStack[i].title << ", Author: " << bookStack[top].author << ", Pages " << bookStack[top].pages << ", Year of Publication: " << bookStack[top].year << "\n";
+        cout << "Book at pos " << i + 1 << " has Title: " << bookStack[i].title << ", Author: " << bookStack[i].author << ", Pages " << bookStack[i].pages << ", Year of Publication: " << bookStack[i].year << "\n";
     }
 }
 
@@ -79,7 +79,6 @@ int main()
     {
         book inputBook;
         string title;
-        int pos, val;
         switch (opt)
         {
         case 1:
