@@ -5,6 +5,12 @@ using namespace std;
 
 void insert(int *arr, int pos, int val, int *lastIdx)
 {
+    if (*lastIdx == MAX_SIZE -1)
+    {
+        cout << "List is FULL" << "\n";
+        return;
+    }
+    
     if (*lastIdx == -1)
     {
         if (pos != 1)

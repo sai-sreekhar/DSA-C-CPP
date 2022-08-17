@@ -52,7 +52,7 @@ void search(string title)
 {
     for (int i = 0; i <= top; i++)
     {
-        if (bookStack[top].title == title)
+        if (bookStack[i].title == title)
         {
             cout << "Book Found at Pos " << i + 1 << "\n";
             return;
