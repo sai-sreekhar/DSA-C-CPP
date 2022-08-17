@@ -107,7 +107,6 @@ void display()
 
 int main()
 {
-
     int opt;
     cout << "Enter 1 to Insert, 2 to Delete, 3 to Search, 4 to Update, 5 to Display, 0 to Quit: ";
     cin >> opt;
