@@ -18,6 +18,7 @@ void linearSearch(student *studentArr, int n, string regNo)
         {
             found = true;
             cout << "Student with Registration Number " << regNo << " has attendance " << studentArr[i].attendancePer << "\n";
+            break;
         }
     }
 
