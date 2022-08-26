@@ -91,6 +91,7 @@ void display()
         cout << currNode->data << "-> ";
         currNode = currNode->next;
     }
+    cout << "\n";
 }
 
 int main()
