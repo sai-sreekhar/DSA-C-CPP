@@ -1,59 +1,41 @@
-#include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
 
 int main()
 {
-    int testCases;
-    cin >> testCases;
-    while (testCases > 0)
+
+    int noOfTestCases;
+    cin >> noOfTestCases;
+
+    while (noOfTestCases--)
     {
-        int n, q;
-        cin >> n >> q;
-        int stops[n];
+        int n;
+        cin >> n;
+        int arr[n];
         for (int i = 0; i < n; i++)
         {
-            cin >> stops[i];
+            cin >> arr[i];
         }
-
-        int res = 0;
-        for (int i = 0; i < q; i++)
+        int res[n];
+        for (int i = 0; i < n; i++)
         {
-            int s1, s2;
-            cin >> s1 >> s2;
-
-            int pos = -1;
-
-            for (int i = 0; i < n; i++)
+            int count = 1;
+            int x = arr[i];
+            while (arr[x - 1] != arr[i])
             {
-                if (stops[i] == s1)
-                {
-                    pos = i;
-                    break;
-                }
+                count++;
+                x = arr[x - 1];
             }
-
-            if (pos == -1)
-            {
-                continue;
-            }
-
-            for (int i = pos; i < n; i++)
-            {
-                if (stops[i] == s2)
-                {
-                    res++;
-                    break;
-                }
-            }
+            res[i] = count;
         }
-        cout << res << "\n";
-        testCases--;
+
+        for (int i = 0; i < n; i++)
+        {
+            cout << res[i] << " ";
+        }
+        cout << "\n";
     }
 
     return 0;
 }
-
-/*
-1 4 5 6 6 8
-*/
