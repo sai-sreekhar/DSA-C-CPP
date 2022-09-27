@@ -24,12 +24,12 @@ int lastIdx = -1;
 
 void enqueue(string name, string role)
 {
-    if (lastIdx  == MAX_SIZE -1)
+    if (lastIdx == MAX_SIZE - 1)
     {
         cout << "OVERFLOW\n";
         return;
     }
-    
+
     lastIdx++;
 
     priorityQueue[lastIdx].name = name;

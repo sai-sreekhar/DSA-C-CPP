@@ -88,9 +88,9 @@ void infixToPostfix(char *exp)
 		return;
 	}
 
-	int openingBracketCount = 0;
-	int closingBracketCount = 0;
-	int operatorCount = 0;
+	// int openingBracketCount = 0;
+	// int closingBracketCount = 0;
+	// int operatorCount = 0;
 	for (i = 0, k = -1; exp[i]; ++i)
 	{
 		if (isOperand(exp[i]))
@@ -100,30 +100,30 @@ void infixToPostfix(char *exp)
 
 		else if (exp[i] == '(')
 		{
-			openingBracketCount++;
+			// openingBracketCount++;
 			push(stack, exp[i]);
 		}
 
 		else if (exp[i] == ')')
 		{
-			closingBracketCount++;
+			// closingBracketCount++;
 			while (!isEmpty(stack) && peek(stack) != '(')
 			{
 				exp[++k] = pop(stack);
 			}
-			if (isEmpty(stack))
-			{
-				cout << "Invalid Expression\n";
-				return;
-			}
-			else
+			// if (isEmpty(stack))
+			// {
+			// 	cout << "Invalid Expression\n";
+			// 	return;
+			// }
+			// else
 			{
 				pop(stack);
 			}
 		}
 		else
 		{
-			operatorCount++;
+			// operatorCount++;
 			while (!isEmpty(stack) && precedence(exp[i]) <= precedence(peek(stack)))
 			{
 				exp[++k] = pop(stack);
@@ -138,16 +138,16 @@ void infixToPostfix(char *exp)
 	}
 
 	exp[++k] = '\0';
-	if (openingBracketCount != closingBracketCount)
-	{
-		cout << "Invalid Expression\n";
-		return;
-	}
-	if (lenOfExp - (2 * operatorCount + 1) - (openingBracketCount + closingBracketCount) != 0)
-	{
-		cout << "Invalid Expression\n";
-		return;
-	}
+	// if (openingBracketCount != closingBracketCount)
+	// {
+	// 	cout << "Invalid Expression\n";
+	// 	return;
+	// }
+	// if (lenOfExp - (2 * operatorCount + 1) - (openingBracketCount + closingBracketCount) != 0)
+	// {
+	// 	cout << "Invalid Expression\n";
+	// 	return;
+	// }
 
 	printf("%s\n", exp);
 }
