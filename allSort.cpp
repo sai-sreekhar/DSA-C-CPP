@@ -188,7 +188,6 @@ int main()
   // insertionSort(arr, n);
   // selectionSort(arr, n);
   // quickSort(arr, 0, n - 1);
-  cout << "After Sorting";
   mergeSort(arr, 0, n - 1);
   for (int i = 0; i < n; i++)
   {
