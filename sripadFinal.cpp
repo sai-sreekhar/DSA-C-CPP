@@ -12,7 +12,7 @@ typedef struct node
 } node;
 node *rootNode = NULL;
 
-int truthValues[MAX_CHARS];
+int truthValues[MAX_CHARS]; // array to store truth value. size is 26 for 26 lower cased alphabets
 
 class Stack
 {
@@ -181,11 +181,11 @@ void evaluate(string prefixExpression)
         else
         {
             int truthVal;
-            if (truthValues[prefixExpression[i] - 'a'] == -1)
+            if (truthValues[prefixExpression[i] - 'a'] == -1) // if truth value is -1 take the input
             {
                 cout << "Enter the truth value for " << prefixExpression[i] << " : ";
-                cin >> truthVal; // taking input for truth values
-                truthValues[prefixExpression[i] - 'a'] = truthVal;
+                cin >> truthVal;                                   // taking input for truth values
+                truthValues[prefixExpression[i] - 'a'] = truthVal; // store the truth value
             }
             operandStack.pushStack(truthValues[prefixExpression[i] - 'a']); // pushing the truth values to stack
         }
@@ -205,7 +205,7 @@ int getHeightOfParseTree(node *rootNode)
     }
     else
     {
-        return 1 + max(getHeightOfParseTree(rootNode->leftChild), getHeightOfParseTree(rootNode->rightChild));
+        return 1 + max(getHeightOfParseTree(rootNode->leftChild), getHeightOfParseTree(rootNode->rightChild)); // iterate through left and right subtrees
     }
 }
 
@@ -275,7 +275,7 @@ string infixToPrefix(string infixExpression)
     for (int i = 0; i < low; i++)
     {
 
-        if (infixExpression[i] == '(')
+        if (infixExpression[i] == '(') // while reversing open bracket and closed brackets should interchange
         {
             infixExpression[i] = ')';
         }
