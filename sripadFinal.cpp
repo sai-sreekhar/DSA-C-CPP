@@ -81,7 +81,7 @@ void inorderTraversal(node *rootNode)
     else
     {
         inorderTraversal(rootNode->leftChild);
-        printf("%c ", rootNode->data);
+        printf("%c", rootNode->data);
         inorderTraversal(rootNode->rightChild);
     }
 }
@@ -299,10 +299,10 @@ int main()
     cout << "Enter the Propositional Logic (Note: It is not case sensitive. Expression should contain only small cased leters) ";
     cin >> propositionalLogic;
     string prefixExpression = infixToPrefix(propositionalLogic);
-
+    cout << "The Prefix Expression is: " << prefixExpression << endl;
     int currentIdx = -1;
     rootNode = constructTree(prefixExpression, currentIdx);
-    cout << "The Infix expression is: ";
+    cout << "The Infix expression is (From Parse Tree): ";
     inorderTraversal(rootNode);
     cout << "\n";
     cout << "Height of Parse tree is ";
