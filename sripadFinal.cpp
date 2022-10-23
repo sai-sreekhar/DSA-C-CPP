@@ -22,49 +22,47 @@ public:
     char stackArr[MAX_SIZE];
 
     Stack() { top = -1; }
-    bool pushStack(int dataToPush);
+    void pushStack(int dataToPush);
     void popStack();
     char peekStack();
     bool isStackEmpty();
 };
 
-bool Stack::pushStack(int dataToPush)
+void Stack::pushStack(int dataToPush)
 {
-    if (top >= (MAX_SIZE - 1))
+    if (top >= (MAX_SIZE - 1)) // if stack is full
     {
         cout << "Stack Overflow";
-        return false;
     }
     else
     {
-        stackArr[++top] = dataToPush;
-        return true;
+        stackArr[++top] = dataToPush; // insert element into stack by incrementing top
     }
 }
 
 void Stack::popStack()
 {
-    if (top < 0)
+    if (top < 0) // if stack is empty
     {
         cout << "Stack Underflow";
         return;
     }
     else
     {
-        int poppedVal = stackArr[top--];
+        int poppedVal = stackArr[top--]; // decrementing top
         return;
     }
 }
 char Stack::peekStack()
 {
-    if (top < 0)
+    if (top < 0) // if stack is empty
     {
         cout << "Stack is Empty";
         return 0;
     }
     else
     {
-        char val = stackArr[top];
+        char val = stackArr[top]; // returning top element in stack
         return val;
     }
 }
@@ -108,7 +106,7 @@ node *constructTree(string s, int &currentIdx)
         return NULL;
     node *rootNode = new node;
     rootNode->data = s[++currentIdx];
-    if (s[currentIdx] == '*' || s[currentIdx] == '~' || s[currentIdx] == '+' || s[currentIdx] == '>')
+    if (s[currentIdx] == '*' || s[currentIdx] == '~' || s[currentIdx] == '+' || s[currentIdx] == '>') // constructing tree with leaf nodes as operands and inner nodes as operators
     {
         rootNode->leftChild = constructTree(s, currentIdx);
         rootNode->rightChild = constructTree(s, currentIdx);
@@ -133,18 +131,18 @@ void evaluate(string prefixExpression)
             operandStack.popStack();
             int val2 = operandStack.peekStack();
             operandStack.popStack();
-            if (prefixExpression[i] == '>')
+            if (prefixExpression[i] == '>') // logic for implication
             {
                 if (val1 == 1 && val2 == 0)
                 {
-                    operandStack.pushStack(0);
+                    operandStack.pushStack(0); // push false i.e 0
                 }
                 else
                 {
-                    operandStack.pushStack(1);
+                    operandStack.pushStack(1); // push true i.e 1
                 }
             }
-            else if (prefixExpression[i] == '*')
+            else if (prefixExpression[i] == '*') // logic for and
             {
                 if (val1 == 1 && val2 == 1)
                 {
@@ -155,7 +153,7 @@ void evaluate(string prefixExpression)
                     operandStack.pushStack(0);
                 }
             }
-            else if (prefixExpression[i] == '+')
+            else if (prefixExpression[i] == '+') // logic for or
             {
                 if (val1 == 0 && val2 == 0)
                 {
@@ -167,7 +165,7 @@ void evaluate(string prefixExpression)
                 }
             }
         }
-        else if (prefixExpression[i] == '~')
+        else if (prefixExpression[i] == '~') // logic for negation
         {
             int val = operandStack.peekStack();
             operandStack.popStack();
@@ -186,10 +184,10 @@ void evaluate(string prefixExpression)
             if (truthValues[prefixExpression[i] - 'a'] == -1)
             {
                 cout << "Enter the truth value for " << prefixExpression[i] << " : ";
-                cin >> truthVal;
+                cin >> truthVal; // taking input for truth values
                 truthValues[prefixExpression[i] - 'a'] = truthVal;
             }
-            operandStack.pushStack(truthValues[prefixExpression[i] - 'a']);
+            operandStack.pushStack(truthValues[prefixExpression[i] - 'a']); // pushing the truth values to stack
         }
 
         i--;
@@ -213,12 +211,12 @@ int getHeightOfParseTree(node *rootNode)
 
 bool isOperator(char opr)
 {
-    return (!isalpha(opr) && !isdigit(opr));
+    return (!isalpha(opr) && !isdigit(opr)); // checking whether given character is operator
 }
 
 int getPrecedence(char opr)
 {
-    if (opr != '(')
+    if (opr != '(') // precendences if all operators are 1 except for "("
         return 1;
     return 0;
 }
@@ -233,13 +231,13 @@ string infixToPostfix(string infixExpression)
     for (int i = 0; i < low; i++)
     {
 
-        if (isalpha(infixExpression[i]) || isdigit(infixExpression[i]))
+        if (isalpha(infixExpression[i]) || isdigit(infixExpression[i])) // if is ooperand append to output string
             postfixExpression += infixExpression[i];
-        else if (infixExpression[i] == '(')
+        else if (infixExpression[i] == '(') // if its open bracket push into stack
             operatorStack.pushStack('(');
         else if (infixExpression[i] == ')')
         {
-            while (operatorStack.peekStack() != '(')
+            while (operatorStack.peekStack() != '(') // if its closed bracket pop all the elements until u get ()
             {
                 postfixExpression += operatorStack.peekStack();
                 operatorStack.popStack();
@@ -248,7 +246,7 @@ string infixToPostfix(string infixExpression)
         }
         else
         {
-            if (isOperator(operatorStack.peekStack()))
+            if (isOperator(operatorStack.peekStack())) // push operator into stack
             {
                 {
                     while (getPrecedence(infixExpression[i]) < getPrecedence(operatorStack.peekStack()))
@@ -261,7 +259,7 @@ string infixToPostfix(string infixExpression)
             }
         }
     }
-    while (!operatorStack.isStackEmpty())
+    while (!operatorStack.isStackEmpty()) // if input string is completely traversed pop all elements from stack and append to output string
     {
         postfixExpression += operatorStack.peekStack();
         operatorStack.popStack();
@@ -272,7 +270,7 @@ string infixToPostfix(string infixExpression)
 string infixToPrefix(string infixExpression)
 {
     int low = infixExpression.size();
-    reverse(infixExpression.begin(), infixExpression.end());
+    reverse(infixExpression.begin(), infixExpression.end()); // reverse given infix
 
     for (int i = 0; i < low; i++)
     {
@@ -287,9 +285,9 @@ string infixToPrefix(string infixExpression)
         }
     }
 
-    string prefixExpression = infixToPostfix(infixExpression);
+    string prefixExpression = infixToPostfix(infixExpression); // convert reversed infix to postfix
 
-    reverse(prefixExpression.begin(), prefixExpression.end());
+    reverse(prefixExpression.begin(), prefixExpression.end()); // reverse the postfix to get prefix
 
     return prefixExpression;
 }
