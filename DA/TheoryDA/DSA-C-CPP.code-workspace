@@ -1,14 +1,10 @@
 {
-	"folders": [
-		{
-			"path": "../.."
-		}
-	],
-	"settings": {
-		"files.associations": {
-			"new": "cpp",
-			"random": "cpp",
-			"iostream": "cpp"
-		}
-	}
+    "folders": [
+        {
+            "path": "../.."
+        },
+        {
+            "path": "../../../Competitive-Coding-Ubuntu"
+        }
+    ]
 }

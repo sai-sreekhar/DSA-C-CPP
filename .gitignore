@@ -1,2 +1,4 @@
 gitCode.txt
-a.out
+*.out
+.vscode
+*.code-workspace
