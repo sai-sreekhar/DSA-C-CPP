@@ -4,6 +4,7 @@ using namespace std;
 
 #define MAX_SIZE 1000
 #define MAX_CHARS 26
+//a b c d e f g h
 
 typedef struct node
 {
@@ -102,6 +103,7 @@ void postOrderTraversal(node *rootNode)
 
 node *constructTree(string s, int &currentIdx)
 {
+    ///+ab
     if (currentIdx == s.size())
         return NULL;
     node *rootNode = new node;
@@ -175,7 +177,7 @@ void evaluate(string prefixExpression)
             }
             else
             {
-                operandStack.pushStack(1);
+                operandStack.pushStack(0);
             }
         }
         else
@@ -192,6 +194,7 @@ void evaluate(string prefixExpression)
 
         i--;
     }
+    
     int result = operandStack.peekStack();
     cout << "The Truth Value of the propositional logic is: " << result << "\n";
     return;
