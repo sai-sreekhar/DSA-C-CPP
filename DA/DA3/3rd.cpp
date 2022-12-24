@@ -51,13 +51,14 @@ int main()
     start = clock();
 
     int n;
-    cout << "Enter the length of the string: ";
+    cout << "Enter the size of array: ";
     cin >> n;
     string arr[n];
     int flag = 0;
-    cout << "Enter the elements: ";
+    
     for (int i = 0; i < n; i++)
     {
+        cout << "Enter the String in position " << i+1 << ": ";
         cin >> arr[i];
     }
 
