@@ -112,6 +112,7 @@ int mcmMemoization(string x, int i, int j)
         else
         {
             left = mcmMemoization(x,i,k);
+            dp[i][k] = left;
         }
 
         if (dp[k+1][j] != -1)
@@ -121,6 +122,7 @@ int mcmMemoization(string x, int i, int j)
         else
         {
             right = mcmMemoization(x,k+1,j);
+            dp[k+1][j] = right; 
         }
 
         count = 1 + left + right;
@@ -137,7 +139,7 @@ int mcmMemoization(string x, int i, int j)
 
 int main()
 {
-    string x = "ababbbabbababa";
+    string x = "abcde";
     cout << mcmRecursion(x, 0, x.length() - 1) << endl;
     memset(dp,-1,sizeof(dp));
     cout << mcmMemoization(x,0,x.length()-1) << endl;
