@@ -1,14 +1,14 @@
 /*
     Author: Sai Sreekar
     Created: 2023/04/09 17:45:36
-    Last Modified: 2023/04/09 21:06:05
+    Last Modified: 2023/04/11 18:30:37
 */
 
 #include <bits/stdc++.h>
 #define ll long long
 using namespace std;
 
-void backtrack(vector<ll> &arr, ll sum, ll n, set<vector<ll>> &st, vector<ll> vec)
+void backtrack(vector<ll> &arr, ll sum, ll n, set<vector<ll>> st, vector<ll> &vec)
 {
     if (sum == 0)
     {
@@ -16,7 +16,7 @@ void backtrack(vector<ll> &arr, ll sum, ll n, set<vector<ll>> &st, vector<ll> ve
         return;
     }
 
-    if (n == 0)
+    if (n == 0 || sum < 0)
     {
         return;
     }
@@ -24,6 +24,7 @@ void backtrack(vector<ll> &arr, ll sum, ll n, set<vector<ll>> &st, vector<ll> ve
     backtrack(arr, sum, n - 1, st, vec);
     vec[n - 1] = 1;
     backtrack(arr, sum - arr[n - 1], n - 1, st, vec);
+    vec[n - 1] = 0;
 }
 
 void solve()
